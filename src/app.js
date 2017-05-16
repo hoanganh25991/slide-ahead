@@ -1,3 +1,5 @@
 import SlideAhead from './SlideAhead'
 
-new SlideAhead({elementSelector: '#yesDiv', direction: 1});
+let yesDiv = document.querySelector('#yesDiv')
+
+new SlideAhead({element: yesDiv, direction: 1});

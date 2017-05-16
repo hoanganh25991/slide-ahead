@@ -12,7 +12,7 @@
     .slide-bar {
         width: 320px;
         height: 50px;
-        transition: 0.2s all ease-in-out;
+        transition: 0.1s transform ease-in-out;
         position: absolute;
         top: calc(50% - 25px);
     }
@@ -27,11 +27,11 @@
     <div><h3>Ads</h3></div>
     <div><h3>Header</h3></div>
     <div class="answer flex1">
-        <div class="slide-bar flex-row green" id="yesDiv" style="left: -308px;">
-            <p class="flex1">YES</p>
-            <p>&gt;</p>
+        <div class="slide-bar flex-row green" id="yesDiv" style="left: -288px;">
+            <button class="flex1">YES</button>
+            <button>&gt;</button>
         </div>
-        <div class="slide-bar flex-row red" id="noDiv" style="left: +308px;">
+        <div class="slide-bar flex-row red" id="noDiv" style="left: 288px;">
             <p>&lt;</p>
             <p class="flex1">NO</p>
         </div>

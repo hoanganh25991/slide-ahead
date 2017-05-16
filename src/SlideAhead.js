@@ -1,42 +1,100 @@
+import DetectDrag from './DetectDrag'
+import * as c from './const-name'
+
+
 export default class SlideAhead {
-	constructor({elementSelector, direction}){
-		this.element   = document.querySelector(elementSelector)
-		this.direction = direction
-		this.move      = 0;
-		
+	constructor({element, direction}){
+		Object.assign(this, {element, direction})
+
+		let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
+		let {m41: startX} = curTransform
+
+		Object.assign(this, {startX})
+
 		this.init()
 	}
-	
+
 	init(){
-		this.bindEventByClassMethod()
+		let {element} = this;
+		DetectDrag.on({element});
+		this.bindEvent()
 	}
 
-	bindEventByClassMethod(){
+	bindEvent(){
 		let self = this;
 		let {element} = this;
 
-		element.addEventListener('drag',  () => self.drag())
-		element.addEventListener('click', () => self.click())
+		element.addEventListener('_hoiDrag',    (e) => self.hoiDrag(e))
+		element.addEventListener('_hoiRelease', (e) => self.hoiRelease(e))
 	}
 
-	drag(){
+	hoiDrag(e){
 		console.log('drag')
-	}
-	
-	click(){
-		console.log('click')
-		this.slideAhead()
+		let {howFar} = e.detail
+
+		let {direction} = this;
+
+		let distance = howFar * direction
+
+		this.slide({distance})
+
 	}
 
-	slideAhead(){
+	hoiRelease(e){
+		console.log('release')
+		let {element} = this
+		// let {alreadyMove} = e.detail
+		let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
+
+		let {m41: curTranlateX, m42: curTranlateY} = curTransform
+
+		let alreadyMove = curTranlateX - this.startX
+
+		this.goAheadOrBounceBack({alreadyMove})
+	}
+
+	goAheadOrBounceBack({alreadyMove}){
+		console.log('alreadyMove', alreadyMove)
+
+		let {element} = this
+		let translateX;
+		let translateY
+
+		if(alreadyMove >= c.THRESHOLD){
+			translateX = this.startX + c.SCREEN_WIDTH - c.ARROW_SIZE;
+			let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
+
+			let {m41: curTranlateX, m42: curTranlateY} = curTransform
+			translateY = curTranlateY
+
+
+			console.log('go ahead')
+
+		}else{
+			console.log('bounce back')
+			let {startX} = this
+			translateX = startX
+			let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
+
+			let {m41: curTranlateX, m42: curTranlateY} = curTransform
+			translateY = curTranlateY
+		}
+
+		console.log('startX', this.startX)
+		console.log(translateX, translateY)
+
+		element.style.transform = `translate(${translateX}px, ${translateY}px)`
+	}
+
+	slide({distance}){
+		console.log(distance)
 		// how far it current transform
-		let self = this;
 		let {element} = this;
 		let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
 
 		let {m41: curTranlateX, m42: curTranlateY} = curTransform
 
-		let translateX = curTranlateX + 10
+		let translateX = curTranlateX + distance
 		let translateY = curTranlateY
 
 		element.style.transform = `translate(${translateX}px, ${translateY}px)`
