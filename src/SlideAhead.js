@@ -48,7 +48,7 @@ export default class SlideAhead {
 
 		let {m41: curTranlateX, m42: curTranlateY} = curTransform
 
-		let alreadyMove = curTranlateX - this.startX
+		let alreadyMove = (curTranlateX - this.startX) * this.direction
 
 		this.goAheadOrBounceBack({alreadyMove})
 	}
@@ -61,7 +61,7 @@ export default class SlideAhead {
 		let translateY
 
 		if(alreadyMove >= c.THRESHOLD){
-			translateX = this.startX + c.SCREEN_WIDTH - c.ARROW_SIZE;
+			translateX = this.startX + (c.SCREEN_WIDTH - c.ARROW_SIZE) * this.direction;
 			let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
 
 			let {m41: curTranlateX, m42: curTranlateY} = curTransform
@@ -94,7 +94,7 @@ export default class SlideAhead {
 
 		let {m41: curTranlateX, m42: curTranlateY} = curTransform
 
-		let translateX = curTranlateX + distance
+		let translateX = curTranlateX + distance * this.direction
 		let translateY = curTranlateY
 
 		element.style.transform = `translate(${translateX}px, ${translateY}px)`
