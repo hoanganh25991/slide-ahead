@@ -4,5 +4,8 @@
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "webpack": "^2.5.1"
+  },
+  "scripts": {
+    "publish": "gh-pages -d build"
   }
 }
