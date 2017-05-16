@@ -3,6 +3,10 @@ export default class DetectDrag {
 	constructor({element}){
 		this.element = element;
 		this.alreadyMove = 0;
+
+		let parent = element.parentElement
+
+		this.parent = parent
 	}
 	
 	static on({element}){
@@ -13,12 +17,16 @@ export default class DetectDrag {
 
 	bindEvent(){
 		let self = this;
-		let {element} = this;
+		let {element, parent} = this;
 
 		element.addEventListener('mousedown',  (e) => this.mousedown(e))
 		element.addEventListener('mousemove',  (e) => this.mousemove(e))
 		element.addEventListener('mouseup',    (e) => this.mouseup(e))
 		element.addEventListener('mouseleave',    (e) => this.mouseleave(e))
+
+		parent.addEventListener('mousemove',  (e) => this.mousemove(e))
+		parent.addEventListener('mouseup',    (e) => this.mouseup(e))
+		parent.addEventListener('mouseleave',    (e) => this.mouseleave(e))
 	}
 
 	mousedown(e){
@@ -73,16 +81,22 @@ export default class DetectDrag {
 		// Object.assign(this, {alreadyMove})
 	}
 
-	mouseleave(){
-		this.clearCheck()
+	mouseleave(e){
+		let shouldClear = e.path[1] != this.parent
+		//console.log(e)
+		if(shouldClear){
+			console.log('should clear')
+			this.clearCheck()
 
-		let {element, alreadyMove} = this
+			let {element, alreadyMove} = this
 
-		element.dispatchEvent(new CustomEvent('_hoiRelease', {detail: {alreadyMove}, bubbles: false}))
+			element.dispatchEvent(new CustomEvent('_hoiRelease', {detail: {alreadyMove}, bubbles: false}))
 
-		// alreadyMove = 0;
-		//
-		// Object.assign(this, {alreadyMove})
+			// alreadyMove = 0;
+			//
+			// Object.assign(this, {alreadyMove})
+		}
+
 	}
 
 	detectDrag(){
