@@ -1,174 +1,159 @@
+<link rel="stylesheet" href="common.css">
 <style type="text/css">
-	*{
-		box-sizing: border-box;
-		border: 1px solid black;
-	}
+    /*App start from here    */
+    .ios {
+        width: 320px;
+        height: 568px;
+        background-color: gray;
+        position: relative;
+        margin: 0 auto;
+    }
 
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+    .slide-bar {
+        width: 320px;
+        height: 50px;
+        transition: 0.2s all ease-in-out;
+        position: absolute;
+        top: calc(50% - 25px);
+    }
 
-	.ios {
-		width: 320;
-		height: 568;
-		background-color: gray;
-		position: relative;
-		margin: 0 auto;
-	}
-
-	.stripe-bar {
-		width: 320px;
-		height: 50px;
-		display: flex;
-		flex-direction: row;
-		transform: 1s all ease-in-out;
-		position: absolute;
-		top: 0;
-	}
-
-	.green {
-		background-color: green;
-	}
-
-	.red {
-		background-color: red;
-	}
-
-	p {
-		text-align: center;
-	}
-
-	.flex1 {
-		flex: 1;
-	}
+    .answer {
+        width: 100%;
+        height: 200px;
+        position:relative;
+    }
 </style>
-<div class="ios">
-<div class="stripe-bar green" id="yesDiv">
-	<p class="flex1">YES</p>
-	<p>&gt;</p>
+<div class="ios flex-column">
+    <div><h3>Ads</h3></div>
+    <div><h3>Header</h3></div>
+    <div class="answer flex1">
+        <div class="slide-bar flex-row green" id="yesDiv" style="left: -308px;">
+            <p class="flex1">YES</p>
+            <p>&gt;</p>
+        </div>
+        <div class="slide-bar flex-row red" id="noDiv" style="left: +308px;">
+            <p>&lt;</p>
+            <p class="flex1">NO</p>
+        </div>
+    </div>
+    <div><h3>Info</h3></div>
+    <div><h3>Button</h3></div>
 </div>
-<div class="stripe-bar red" id="noDiv">
-	<p>&lt;</p>
-	<p class="flex1">NO</p>
-</div>
-</div>
-<script type="text/javascript">
-	const screenWith   = 320;
-	const screenHeight = 568;
-	const arrowWidth   = 12;
+<!--<script type="text/javascript">-->
+<!--const screenWith   = 320;-->
+<!--const screenHeight = 568;-->
+<!--const arrowWidth   = 12;-->
 
 
-	function translate(element, howFar, direction){
-		let x = direction * howFar;
-		//let y = screenHeight / 2;
-		element.style.transform = `translate(${x}px, ${screenHeight / 2}px)`;
-	}
+<!--function translate(element, howFar, direction){-->
+<!--let x = direction * howFar;-->
+<!--//let y = screenHeight / 2;-->
+<!--element.style.transform = `translate(${x}px, ${screenHeight / 2}px)`;-->
+<!--}-->
 
-	function detectOnDrag(element){
-		let start = {
-			event: null,
-			time: null,
-		};
-		
-		let end   = {
-			event: null,
-			time: null,
-		};
+<!--function detectOnDrag(element){-->
+<!--let start = {-->
+<!--event: null,-->
+<!--time: null,-->
+<!--};-->
+<!---->
+<!--let end   = {-->
+<!--event: null,-->
+<!--time: null,-->
+<!--};-->
 
-		element.addEventListener('mousedown', (e) => {
-			console.log('mouse down', 'screenX', e.screenX, 'screenY', e.screenY);
-			start.time  = new Date();
-			start.event = e;
-		});
+<!--element.addEventListener('mousedown', (e) => {-->
+<!--console.log('mouse down', 'screenX', e.screenX, 'screenY', e.screenY);-->
+<!--start.time  = new Date();-->
+<!--start.event = e;-->
+<!--});-->
 
-		element.addEventListener('mouseup', (e) => {
-			console.log('mouse up', 'screenX', e.screenX, 'screenY', e.screenY);
-			end.time  = new Date();
-			end.event = e;
+<!--element.addEventListener('mouseup', (e) => {-->
+<!--console.log('mouse up', 'screenX', e.screenX, 'screenY', e.screenY);-->
+<!--end.time  = new Date();-->
+<!--end.event = e;-->
 
-			checkOnDrag(start, end);
-		});
+<!--checkOnDrag(start, end);-->
+<!--});-->
 
-		function checkOnDrag(start, end){
-			if(isDrag(start.time, end.time)){
-				console.log('on drag');
-				dispatchDragEvent(start.event, end.event);
-				start = {
-					event: null,
-					time: null,
-				};
-				end   = {
-					event: null,
-					time: null,
-				};
-			}
-		}
+<!--function checkOnDrag(start, end){-->
+<!--if(isDrag(start.time, end.time)){-->
+<!--console.log('on drag');-->
+<!--dispatchDragEvent(start.event, end.event);-->
+<!--start = {-->
+<!--event: null,-->
+<!--time: null,-->
+<!--};-->
+<!--end   = {-->
+<!--event: null,-->
+<!--time: null,-->
+<!--};-->
+<!--}-->
+<!--}-->
 
-		function isDrag(start, end){
-			let dif    = end.getTime() - start.getTime();
-			let isDrag = dif > 300;
-			
-			return isDrag;
-		}
+<!--function isDrag(start, end){-->
+<!--let dif    = end.getTime() - start.getTime();-->
+<!--let isDrag = dif > 300;-->
+<!---->
+<!--return isDrag;-->
+<!--}-->
 
-		function dispatchDragEvent(startEvent, endEvent){
-			let diffInScreenX = endEvent.screenX - startEvent.screenX;
-			console.log('diffInScreenX', diffInScreenX);
+<!--function dispatchDragEvent(startEvent, endEvent){-->
+<!--let diffInScreenX = endEvent.screenX - startEvent.screenX;-->
+<!--console.log('diffInScreenX', diffInScreenX);-->
 
-			let howFar = Math.abs(diffInScreenX);
-			let direction = diffInScreenX > 0 ? +1 : -1;
+<!--let howFar = Math.abs(diffInScreenX);-->
+<!--let direction = diffInScreenX > 0 ? +1 : -1;-->
 
-			element.dispatchEvent(new CustomEvent('drag', {detail: {howFar, direction}, bubbles: false}));
-		}
-	}
+<!--element.dispatchEvent(new CustomEvent('drag', {detail: {howFar, direction}, bubbles: false}));-->
+<!--}-->
+<!--}-->
 
-	function init(){
+<!--function init(){-->
 
-		let yesDiv = document.getElementById('yesDiv');
-		let noDiv  = document.getElementById('noDiv');
+<!--let yesDiv = document.getElementById('yesDiv');-->
+<!--let noDiv  = document.getElementById('noDiv');-->
 
-		translate(yesDiv, screenWith -12, -1);
-		translate(noDiv, screenWith -12, +1);
+<!--translate(yesDiv, screenWith -12, -1);-->
+<!--translate(noDiv, screenWith -12, +1);-->
 
-		detectOnDrag(yesDiv);
-		detectOnDrag(noDiv);
+<!--detectOnDrag(yesDiv);-->
+<!--detectOnDrag(noDiv);-->
 
-		yesDiv.addEventListener('drag', (e) => {
-			let {howFar, direction} = e.detail;
-			
-			console.log('howFar', howFar, 'direction', direction);
+<!--yesDiv.addEventListener('drag', (e) => {-->
+<!--let {howFar, direction} = e.detail;-->
+<!---->
+<!--console.log('howFar', howFar, 'direction', direction);-->
 
-			const allowedDirection = +1;
+<!--const allowedDirection = +1;-->
 
-			if(allowedDirection == direction){
-				let shouldMove = screenWith -12 - howFar;
-				console.log('shouldMove', shouldMove);
-				translate(noDiv, shouldMove, allowedDirection);
-			}
-		});
+<!--if(allowedDirection == direction){-->
+<!--let shouldMove = screenWith -12 - howFar;-->
+<!--console.log('shouldMove', shouldMove);-->
+<!--translate(noDiv, shouldMove, allowedDirection);-->
+<!--}-->
+<!--});-->
 
-		noDiv.addEventListener('drag', (e) => {
-			let {howFar, direction} = e.detail;
-			
-			console.log('howFar', howFar, 'direction', direction);
+<!--noDiv.addEventListener('drag', (e) => {-->
+<!--let {howFar, direction} = e.detail;-->
+<!---->
+<!--console.log('howFar', howFar, 'direction', direction);-->
 
-			const allowedDirection = -1;
+<!--const allowedDirection = -1;-->
 
-			if(allowedDirection == direction){
-				let shouldMove = screenWith -12 - howFar;
-				console.log('shouldMove', shouldMove);
-				translate(noDiv, shouldMove, allowedDirection);
-			}
-		});
+<!--if(allowedDirection == direction){-->
+<!--let shouldMove = screenWith -12 - howFar;-->
+<!--console.log('shouldMove', shouldMove);-->
+<!--translate(noDiv, shouldMove, allowedDirection);-->
+<!--}-->
+<!--});-->
 
-		
-		
-	}
+<!---->
+<!---->
+<!--}-->
 
-	init();
+<!--init();-->
 
 
-</script>
+<!--</script>-->
 <script src="app.bundle.js"></script>

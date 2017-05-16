@@ -32,8 +32,8 @@ export default class SlideAhead {
 		// how far it current transform
 		let self = this;
 		let {element} = this;
-		let curTransform = new DOMMatrix (window.getComputedStyle(element).webkitTransform);
-		console.log(curTransform)
+		let curTransform = new DOMMatrix(window.getComputedStyle(element).transform);
+
 		let {m41: curTranlateX, m42: curTranlateY} = curTransform
 
 		let translateX = curTranlateX + 10
