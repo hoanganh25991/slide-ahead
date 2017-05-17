@@ -82,7 +82,13 @@ export default class DetectDrag {
 	}
 
 	mouseleave(e){
-		let shouldClear = e.path[1] != this.parent
+		let {parent} = this
+		let eventHitParent = e.path.filter(node => node == parent)
+		// leave out of element check
+		// also leave out of parent
+		// ok, actually leave
+		// clear detect
+		let shouldClear = eventHitParent.length == 0
 		//console.log(e)
 		if(shouldClear){
 			console.log('should clear')
